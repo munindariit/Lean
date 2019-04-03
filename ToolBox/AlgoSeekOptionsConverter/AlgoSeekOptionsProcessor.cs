@@ -30,8 +30,8 @@ namespace QuantConnect.ToolBox.AlgoSeekOptionsConverter
     /// </summary>
     public class AlgoSeekOptionsProcessor
     {
-        private string _zipPath;
-        private string _entryPath;
+        private FileInfo _zipPath;
+        private FileInfo _entryPath;
         private Symbol _symbol;
         private TickType _tickType;
         private Resolution _resolution;
@@ -47,13 +47,13 @@ namespace QuantConnect.ToolBox.AlgoSeekOptionsConverter
         /// <summary>
         /// Zip entry name for the option contract
         /// </summary>
-        public string EntryPath
+        public FileInfo EntryPath
         {
             get
             {
                 if (_entryPath == null)
                 {
-                    _entryPath = SafeName(LeanData.GenerateZipEntryName(_symbol, _referenceDate, _resolution, _tickType));
+                    _entryPath = new FileInfo(SafeName(LeanData.GenerateZipEntryName(_symbol, _referenceDate, _resolution, _tickType)));
                 }   
                 return _entryPath;
             }
@@ -63,13 +63,13 @@ namespace QuantConnect.ToolBox.AlgoSeekOptionsConverter
         /// <summary>
         /// Zip file path for the option contract collection
         /// </summary>
-        public string ZipPath
+        public FileInfo ZipPath
         {
             get
             {
                 if (_zipPath == null)
                 {
-                    _zipPath = Path.Combine(_dataDirectory, SafeName(LeanData.GenerateRelativeZipFilePath(Safe(_symbol), _referenceDate, _resolution, _tickType).Replace(".zip", string.Empty))) + ".zip";
+                    _zipPath = new FileInfo(Path.Combine(_dataDirectory, SafeName(LeanData.GenerateRelativeZipFilePath(Safe(_symbol), _referenceDate, _resolution, _tickType).Replace(".zip", string.Empty))) + ".zip");
                 }
                 return _zipPath;
             }

@@ -71,10 +71,6 @@ namespace QuantConnect.ToolBox.AlgoSeekOptionsConverter
             converter.Convert();
             Log.Trace(string.Format("AlgoSeekOptionConverter.Main(): {0} Conversion finished in time: {1}", referenceDate, timer.Elapsed));
 
-            timer.Restart();
-            converter.Package(referenceDate);
-            Log.Trace(string.Format("AlgoSeekOptionConverter.Main(): {0} Compression finished in time: {1}", referenceDate, timer.Elapsed));
-
             if (cleanSourceDirectory)
             {
                 Log.Trace(string.Format("AlgoSeekOptionConverter.Main(): Cleaning source directory: {0}", sourceDirectory));
