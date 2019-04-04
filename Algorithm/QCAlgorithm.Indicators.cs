@@ -998,7 +998,14 @@ namespace QuantConnect.Algorithm
         {
             string name = CreateIndicatorName(symbol, "SMA" + period, resolution);
             var sma = new SimpleMovingAverage(name, period);
-            RegisterIndicator(symbol, sma, resolution, selector);
+            // Temporary hack
+            //RegisterIndicator(symbol, sma, resolution, selector);
+
+            var periods = sma.GetWarmUpPeriod();
+
+            History(new[] { symbol }, periods, resolution)
+                .PushThrough(bar => sma.Update(bar.EndTime, bar.Value));
+
             return sma;
         }
         /// <summary>

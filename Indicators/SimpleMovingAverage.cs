@@ -19,8 +19,10 @@ namespace QuantConnect.Indicators
     /// <summary>
     ///     Represents the traditional simple moving average indicator (SMA)
     /// </summary>
-    public class SimpleMovingAverage : WindowIndicator<IndicatorDataPoint>
+    public class SimpleMovingAverage : WindowIndicator<IndicatorDataPoint>, IIndicatorWarmUpPeriodProvider
     {
+        private readonly int _period;
+
         /// <summary>A rolling sum for computing the average for the given period</summary>
         public IndicatorBase<IndicatorDataPoint> RollingSum { get; private set; }
 
@@ -47,6 +49,7 @@ namespace QuantConnect.Indicators
         public SimpleMovingAverage(string name, int period)
             : base(name, period)
         {
+            _period = period;
             RollingSum = new Sum(name + "_Sum", period);
         }
 
@@ -70,5 +73,7 @@ namespace QuantConnect.Indicators
             RollingSum.Update(input.Time, input.Value);
             return RollingSum.Current.Value / window.Count;
         }
+
+        public int GetWarmUpPeriod() => _period;
     }
 }
