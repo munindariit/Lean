@@ -500,7 +500,7 @@ namespace QuantConnect.Algorithm
             var dataType = typeof(BaseData);
             if (security.Type == SecurityType.Option || security.Type == SecurityType.Future)
             {
-                dataType = LeanData.GetDataType(resolution, TickType.Quote);
+                dataType = LeanData.GetDataType(resolution, TickType.Trade);
             }
 
             // Get the config with the largest resolution
