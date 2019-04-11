@@ -400,7 +400,7 @@ namespace QuantConnect.Lean.Engine.DataFeeds
         {
             if (isCanonical)
             {
-                return new List<Tuple<Type, TickType>> { new Tuple<Type, TickType>(typeof(ZipEntryName), TickType.Quote) };
+                return new List<Tuple<Type, TickType>> { new Tuple<Type, TickType>(typeof(ZipEntryName), TickType.Trade) };
             }
 
             return AvailableDataTypes[symbolSecurityType]
