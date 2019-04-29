@@ -143,6 +143,35 @@ namespace QuantConnect.Securities.Future
         }
         
         /// <summary>
+        /// Method to retrieve last NSE Thursday of the given month. (method added by Munindar)
+        /// </summary>
+        /// <param name="time">Date from the given month</param>
+        /// <returns>Last working NSE Thursday of the given month</returns>
+        public static DateTime NSELastThursday(DateTime time)
+        {
+            var daysInMonth = DateTime.DaysInMonth(time.Year, time.Month);
+            
+            var lastThursday = (from day in Enumerable.Range(1, daysInMonth)
+                                  where new DateTime(time.Year, time.Month, day).DayOfWeek == DayOfWeek.Thursday
+                                  select new DateTime(time.Year, time.Month, day)).Reverse().ElementAt(0);
+            while (!NotNSEHoliday(lastThursday))
+            {
+                lastThursday = lastThursday.AddDays(-1);
+            }
+            return lastThursday;
+        }
+
+        /// <summary>
+        /// Method to check whether a given time is NSE holiday or not. (method added by Munindar)
+        /// </summary>
+        /// <param name="time">The DateTime for consideration</param>
+        /// <returns>True if the time is not a holidays, otherwise returns false</returns>
+        public static bool NotNSEHoliday(DateTime time)
+        {
+            return time.IsCommonBusinessDay() && !NSEHoliday.Dates.Contains(time);
+        }
+        
+        /// <summary>
         /// Method to check whether a given time is holiday or not
         /// </summary>
         /// <param name="time">The DateTime for consideration</param>
