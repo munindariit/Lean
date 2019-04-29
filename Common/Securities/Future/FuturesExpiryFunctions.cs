@@ -35,7 +35,11 @@ namespace QuantConnect.Securities.Future
             }
 
             // If function for expiry cannot be found pass the date through
-            return (date) => date;
+            // return (date) => date;
+            
+            // by default set NSE India's rule for expiry (anyways above if condition will be 
+            // false for nfo stocks because they are not in dictionay)
+            return FuturesExpiryUtilityFunctions.NSELastThursday(time);
         }
 
         /// <summary>
