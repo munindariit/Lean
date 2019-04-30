@@ -39,7 +39,7 @@ namespace QuantConnect.Securities.Future
             
             // by default set NSE India's rule for expiry (anyways above if condition will be 
             // false for nfo stocks because they are not in dictionay)
-            return FuturesExpiryUtilityFunctions.NSELastThursday(time);
+            return (time => FuturesExpiryUtilityFunctions.NSELastThursday(time));
         }
 
         /// <summary>
